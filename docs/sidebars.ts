@@ -6,7 +6,7 @@ const sidebars: SidebarsConfig = {
       type: "category",
       label: "Getting Started",
       items: [
-        "getting-started/5-minute-telegram-setup",
+        "getting-started/telegram-quickstart",
         "getting-started/quickstart",
         "getting-started/installation",
         "getting-started/configuration",
