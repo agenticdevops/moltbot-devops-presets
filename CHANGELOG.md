@@ -9,6 +9,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- **Telegram Bot Integration**
+  - Full bot implementation with TelegramBot class
+  - Command handlers (/plans, /approve, /reject, /execute, /rollback, /health)
+  - Webhook endpoint for receiving updates
+  - Setup endpoint for configuring webhook URL
+
+- **Heartbeat & Monitoring**
+  - HeartbeatScheduler for automated status reports
+  - System stats collection (CPU, memory, disk, uptime)
+  - Docker stats collection (containers, images, networks)
+  - Kubernetes stats collection (nodes, pods, deployments)
+  - Heartbeat API endpoints (GET, trigger, preview)
+  - Configurable heartbeat intervals
+
+- **Docusaurus Documentation Site**
+  - Getting Started: 5-minute setup, quickstart, installation, configuration
+  - User Guide: commands, safety modes, approval workflow, Telegram bot
+  - Deployment: Docker, Kubernetes, environment variables
+  - Developers: architecture, API reference, skills, contributing
+
+- **Additional DevOps Skills**
+  - k8s-debug - Kubernetes debugging and troubleshooting
+  - aws-ops - AWS operations (EC2, S3, Lambda, ECS)
+  - incident-response - On-call and incident management
+  - system-health - System monitoring and diagnostics
+  - log-analysis - Log searching and analysis
+
 - Execution engine integration from devops-execution-engine
   - Plan generator with structured YAML-based plans
   - Approval handler with risk-based workflow
@@ -28,6 +55,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Plans API (create, list, get, delete)
   - Approvals API (approve, reject, execute, rollback)
   - Webhooks for Slack and Telegram integration
+  - Heartbeat API (status reports, trigger, preview)
   - Audit log API
 
 ## [0.1.0] - 2026-01-28
