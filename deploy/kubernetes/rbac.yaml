@@ -1,0 +1,112 @@
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: opsbot
+  namespace: opsbot
+  labels:
+    app.kubernetes.io/name: opsbot
+
+---
+# ClusterRole for read-only access (default safe mode)
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: opsbot-reader
+  labels:
+    app.kubernetes.io/name: opsbot
+rules:
+  # Core resources - read only
+  - apiGroups: [""]
+    resources:
+      - pods
+      - pods/log
+      - services
+      - configmaps
+      - secrets
+      - namespaces
+      - events
+      - nodes
+      - persistentvolumeclaims
+      - persistentvolumes
+    verbs: ["get", "list", "watch"]
+
+  # Apps resources - read only
+  - apiGroups: ["apps"]
+    resources:
+      - deployments
+      - statefulsets
+      - daemonsets
+      - replicasets
+    verbs: ["get", "list", "watch"]
+
+  # Batch resources - read only
+  - apiGroups: ["batch"]
+    resources:
+      - jobs
+      - cronjobs
+    verbs: ["get", "list", "watch"]
+
+  # Networking resources - read only
+  - apiGroups: ["networking.k8s.io"]
+    resources:
+      - ingresses
+      - networkpolicies
+    verbs: ["get", "list", "watch"]
+
+  # Autoscaling - read only
+  - apiGroups: ["autoscaling"]
+    resources:
+      - horizontalpodautoscalers
+    verbs: ["get", "list", "watch"]
+
+  # Metrics - read only
+  - apiGroups: ["metrics.k8s.io"]
+    resources:
+      - pods
+      - nodes
+    verbs: ["get", "list"]
+
+---
+# ClusterRoleBinding for read-only access
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: opsbot-reader-binding
+  labels:
+    app.kubernetes.io/name: opsbot
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: opsbot-reader
+subjects:
+  - kind: ServiceAccount
+    name: opsbot
+    namespace: opsbot
+
+---
+# Optional: ClusterRole for write access (use with plan-mode approval)
+# Uncomment if you need opsbot to perform mutations after approval
+# apiVersion: rbac.authorization.k8s.io/v1
+# kind: ClusterRole
+# metadata:
+#   name: opsbot-operator
+#   labels:
+#     app.kubernetes.io/name: opsbot
+# rules:
+#   - apiGroups: [""]
+#     resources:
+#       - pods
+#       - configmaps
+#       - secrets
+#     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+#   - apiGroups: ["apps"]
+#     resources:
+#       - deployments
+#       - statefulsets
+#       - daemonsets
+#     verbs: ["get", "list", "watch", "create", "update", "patch", "delete"]
+#   - apiGroups: ["batch"]
+#     resources:
+#       - jobs
+#     verbs: ["get", "list", "watch", "create", "delete"]

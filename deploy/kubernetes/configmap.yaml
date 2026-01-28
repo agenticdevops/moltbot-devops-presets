@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: opsbot-config
+  namespace: opsbot
+  labels:
+    app.kubernetes.io/name: opsbot
+data:
+  config.json: |
+    {
+      "version": 1,
+      "safety": {
+        "mode": "plan-mode",
+        "planTimeoutSec": 300,
+        "alwaysRequireApproval": ["delete", "destroy", "terminate"]
+      },
+      "skills": {
+        "allowBundled": ["docker", "kubernetes", "terraform", "github"]
+      },
+      "channels": {
+        "tui": { "enabled": false },
+        "telegram": { "enabled": false },
+        "slack": { "enabled": true }
+      },
+      "exec": {
+        "security": "allowlist",
+        "onMiss": "ask"
+      },
+      "logging": {
+        "level": "info",
+        "redactSecrets": true
+      }
+    }

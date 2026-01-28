@@ -1,0 +1,124 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opsbot
+  namespace: opsbot
+  labels:
+    app.kubernetes.io/name: opsbot
+    app.kubernetes.io/component: server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opsbot
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: opsbot
+        app.kubernetes.io/component: server
+      annotations:
+        # Trigger rollout on config change
+        checksum/config: "{{ include (print $.Template.BasePath \"/configmap.yaml\") . | sha256sum }}"
+    spec:
+      serviceAccountName: opsbot
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        runAsGroup: 1000
+        fsGroup: 1000
+
+      containers:
+        - name: opsbot
+          image: ghcr.io/agenticdevops/opsbot:latest
+          imagePullPolicy: Always
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+
+          env:
+            - name: NODE_ENV
+              value: "production"
+            - name: OPSBOT_SAFETY_MODE
+              value: "plan-mode"
+            - name: ANTHROPIC_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: opsbot-secrets
+                  key: anthropic-api-key
+            # Uncomment for Slack integration
+            # - name: SLACK_BOT_TOKEN
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: opsbot-secrets
+            #       key: slack-bot-token
+            # - name: SLACK_APP_TOKEN
+            #   valueFrom:
+            #     secretKeyRef:
+            #       name: opsbot-secrets
+            #       key: slack-app-token
+
+          volumeMounts:
+            - name: config
+              mountPath: /app/config.json
+              subPath: config.json
+              readOnly: true
+            - name: data
+              mountPath: /app/data
+            - name: memory
+              mountPath: /app/memory
+
+          resources:
+            requests:
+              cpu: 100m
+              memory: 256Mi
+            limits:
+              cpu: 1000m
+              memory: 1Gi
+
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 10
+            periodSeconds: 30
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          readinessProbe:
+            httpGet:
+              path: /health
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: false
+            capabilities:
+              drop:
+                - ALL
+
+      volumes:
+        - name: config
+          configMap:
+            name: opsbot-config
+        - name: data
+          persistentVolumeClaim:
+            claimName: opsbot-data
+        - name: memory
+          persistentVolumeClaim:
+            claimName: opsbot-memory
+
+      # Optional: Node selector for specific nodes
+      # nodeSelector:
+      #   kubernetes.io/os: linux
+
+      # Optional: Tolerations
+      # tolerations:
+      #   - key: "dedicated"
+      #     operator: "Equal"
+      #     value: "opsbot"
+      #     effect: "NoSchedule"

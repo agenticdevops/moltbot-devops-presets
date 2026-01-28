@@ -1,0 +1,33 @@
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opsbot-data
+  namespace: opsbot
+  labels:
+    app.kubernetes.io/name: opsbot
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  # Uncomment and specify your storage class
+  # storageClassName: standard
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: opsbot-memory
+  namespace: opsbot
+  labels:
+    app.kubernetes.io/name: opsbot
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  # Uncomment and specify your storage class
+  # storageClassName: standard

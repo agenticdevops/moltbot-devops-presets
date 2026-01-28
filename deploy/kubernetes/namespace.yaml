@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: opsbot
+  labels:
+    app.kubernetes.io/name: opsbot
+    app.kubernetes.io/component: devops-assistant

@@ -1,0 +1,34 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: opsbot
+
+resources:
+  - namespace.yaml
+  - configmap.yaml
+  - secret.yaml
+  - rbac.yaml
+  - pvc.yaml
+  - deployment.yaml
+  - service.yaml
+
+commonLabels:
+  app.kubernetes.io/name: opsbot
+  app.kubernetes.io/version: "0.1.0"
+  app.kubernetes.io/managed-by: kustomize
+
+# Optional: Image customization
+# images:
+#   - name: ghcr.io/agenticdevops/opsbot
+#     newTag: v0.1.0
+
+# Optional: Config/Secret generation
+# configMapGenerator:
+#   - name: opsbot-config
+#     files:
+#       - config.json
+
+# secretGenerator:
+#   - name: opsbot-secrets
+#     envs:
+#       - .env.secret

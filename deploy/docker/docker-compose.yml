@@ -1,0 +1,67 @@
+version: '3.8'
+
+services:
+  opsbot:
+    build:
+      context: ../..
+      dockerfile: deploy/docker/Dockerfile
+      args:
+        INSTALL_KUBECTL: "true"
+        INSTALL_GH: "true"
+    image: opsbot:latest
+    container_name: opsbot
+    ports:
+      - "${OPSBOT_PORT:-3000}:3000"
+    environment:
+      # AI Provider (required)
+      - ANTHROPIC_API_KEY=${ANTHROPIC_API_KEY}
+      # - OPENAI_API_KEY=${OPENAI_API_KEY}
+      # - OPENROUTER_API_KEY=${OPENROUTER_API_KEY}
+
+      # Safety mode (read-only, plan-mode, full-access)
+      - OPSBOT_SAFETY_MODE=${OPSBOT_SAFETY_MODE:-plan-mode}
+
+      # Channel tokens (optional)
+      - SLACK_BOT_TOKEN=${SLACK_BOT_TOKEN:-}
+      - SLACK_APP_TOKEN=${SLACK_APP_TOKEN:-}
+      - TELEGRAM_BOT_TOKEN=${TELEGRAM_BOT_TOKEN:-}
+
+      # Internal
+      - NODE_ENV=production
+    volumes:
+      # Persistent data
+      - opsbot-data:/app/data
+      - opsbot-memory:/app/memory
+
+      # Mount kubeconfig for kubectl access (optional)
+      - ${HOME}/.kube:/home/opsbot/.kube:ro
+
+      # Mount AWS credentials (optional)
+      - ${HOME}/.aws:/home/opsbot/.aws:ro
+
+      # Mount custom config (optional)
+      - ${OPSBOT_CONFIG:-./config.json}:/app/config.json:ro
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+
+  # Optional: Redis for session storage (uncomment if needed)
+  # redis:
+  #   image: redis:7-alpine
+  #   container_name: opsbot-redis
+  #   volumes:
+  #     - redis-data:/data
+  #   restart: unless-stopped
+
+volumes:
+  opsbot-data:
+  opsbot-memory:
+  # redis-data:
+
+networks:
+  default:
+    name: opsbot-network
