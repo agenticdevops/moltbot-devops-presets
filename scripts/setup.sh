@@ -21,7 +21,17 @@ check_command() {
 # Step 1: Check/Install clawdbot
 echo "📦 Checking clawdbot..."
 if check_command clawdbot; then
-    CLAWDBOT_VERSION=$(clawdbot --version 2>/dev/null || echo "unknown")
+    # Use timeout to prevent hanging (clawdbot can hang on some systems)
+    if check_command timeout; then
+        CLAWDBOT_VERSION=$(timeout 5 clawdbot --version 2>/dev/null || echo "installed")
+    else
+        # macOS doesn't have timeout by default, try gtimeout or skip version check
+        if check_command gtimeout; then
+            CLAWDBOT_VERSION=$(gtimeout 5 clawdbot --version 2>/dev/null || echo "installed")
+        else
+            CLAWDBOT_VERSION="installed"
+        fi
+    fi
     echo "   ✓ clawdbot ${CLAWDBOT_VERSION} found"
 else
     echo "   clawdbot not found, installing..."
@@ -154,7 +164,7 @@ fi
 echo ""
 echo "📋 Verifying setup..."
 if check_command clawdbot; then
-    echo "   ✓ clawdbot ready"
+    echo "   ✓ clawdbot found in PATH"
 else
     echo "   ⚠️  clawdbot not in PATH (may need to restart shell)"
 fi
