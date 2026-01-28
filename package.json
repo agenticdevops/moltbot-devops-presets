@@ -1,14 +1,14 @@
 {
-  "name": "opsbot",
+  "name": "moltbot-devops-presets",
   "version": "0.2.0",
-  "description": "DevOps preset pack for Clawdbot - safety-first infrastructure automation",
+  "description": "Safety-first DevOps preset pack for Clawdbot/Moltbot",
   "private": true,
   "scripts": {
     "setup": "./scripts/setup.sh"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/agenticdevops/opsbot"
+    "url": "https://github.com/agenticdevops/moltbot-devops-presets"
   },
   "license": "MIT",
   "keywords": [

@@ -9,7 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Changed
 
-- **Major Architecture Pivot**: Opsbot is now a preset pack for Clawdbot instead of a standalone application
+- **Renamed to moltbot-devops-presets** - Better reflects the project's purpose as a preset pack for Clawdbot/Moltbot
+- **Major Architecture Pivot**: Now a preset pack for Clawdbot instead of a standalone application
 - Removed custom server, safety layer, and Telegram integration (use Clawdbot's built-in features)
 - Simplified to just presets + setup script
 
@@ -53,5 +54,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 **Note**: v0.1.0 is preserved in the `opsbot-standalone` branch.
 
-[0.2.0]: https://github.com/agenticdevops/opsbot/compare/v0.1.0...v0.2.0
-[0.1.0]: https://github.com/agenticdevops/opsbot/releases/tag/v0.1.0
+[0.2.0]: https://github.com/agenticdevops/moltbot-devops-presets/compare/v0.1.0...v0.2.0
+[0.1.0]: https://github.com/agenticdevops/moltbot-devops-presets/releases/tag/v0.1.0

@@ -1,16 +1,16 @@
 #!/bin/bash
-# Opsbot Setup - DevOps preset for Clawdbot
-# https://github.com/agenticdevops/opsbot
+# Moltbot DevOps Presets Setup
+# https://github.com/agenticdevops/moltbot-devops-presets
 
 set -e
 
-OPSBOT_VERSION="0.2.0"
+VERSION="0.2.0"
 SKILLS_REPO="https://github.com/agenticdevops/agentic-ops-skills.git"
-PRESETS_BASE="https://raw.githubusercontent.com/agenticdevops/opsbot/main/presets"
+PRESETS_BASE="https://raw.githubusercontent.com/agenticdevops/moltbot-devops-presets/main/presets"
 
 echo ""
-echo "🤖 Opsbot Setup v${OPSBOT_VERSION}"
-echo "   DevOps preset for Clawdbot"
+echo "🤖 Moltbot DevOps Presets Setup v${VERSION}"
+echo "   Safety-first DevOps automation for Clawdbot"
 echo ""
 
 # Check for required tools
@@ -128,7 +128,7 @@ echo "   ✓ ${ELIGIBLE} DevOps skills ready"
 # Done
 echo ""
 echo "═══════════════════════════════════════════════════════════"
-echo "✅ Opsbot configured!"
+echo "✅ DevOps presets configured!"
 echo ""
 echo "   Safety Mode: ${mode_desc}"
 echo "   Config:      ${CONFIG_FILE}"

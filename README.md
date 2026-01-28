@@ -1,8 +1,8 @@
-# Opsbot
+# Moltbot DevOps Presets
 
-> DevOps preset pack for [Clawdbot](https://github.com/nicksellen/clawdbot)
+> Safety-first DevOps preset pack for [Clawdbot](https://github.com/nicksellen/clawdbot)
 
-Opsbot provides pre-configured safety presets and DevOps skills for using Clawdbot as a DevOps assistant. It gives you a ChatOps interface to your infrastructure through Telegram, Slack, or terminal.
+Pre-configured safety presets and DevOps skills for using Clawdbot as a DevOps assistant. Get a ChatOps interface to your infrastructure through Telegram, Slack, or terminal.
 
 ## Features
 
@@ -15,15 +15,15 @@ Opsbot provides pre-configured safety presets and DevOps skills for using Clawdb
 
 ```bash
 # One-liner setup
-curl -fsSL https://raw.githubusercontent.com/agenticdevops/opsbot/main/scripts/setup.sh | bash
+curl -fsSL https://raw.githubusercontent.com/agenticdevops/moltbot-devops-presets/main/scripts/setup.sh | bash
 ```
 
 Or step by step:
 
 ```bash
 # 1. Clone this repo
-git clone https://github.com/agenticdevops/opsbot.git
-cd opsbot
+git clone https://github.com/agenticdevops/moltbot-devops-presets.git
+cd moltbot-devops-presets
 
 # 2. Run setup
 ./scripts/setup.sh
@@ -60,7 +60,7 @@ All commands execute without approval. Use with caution!
 
 ## DevOps Skills
 
-Opsbot includes 11 DevOps skills from [agentic-ops-skills](https://github.com/agenticdevops/agentic-ops-skills):
+Includes 11 DevOps skills from [agentic-ops-skills](https://github.com/agenticdevops/agentic-ops-skills):
 
 | Skill | Description |
 |-------|-------------|
@@ -165,7 +165,7 @@ cp presets/devops-standard.json ~/.clawdbot/clawdbot.json
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│                      Opsbot                              │
+│              Moltbot DevOps Presets                      │
 │  ┌─────────────┐  ┌─────────────┐  ┌─────────────┐     │
 │  │   Presets   │  │   Skills    │  │   Setup     │     │
 │  │   (JSON)    │  │ (Symlinks)  │  │  Script     │     │
@@ -187,10 +187,6 @@ cp presets/devops-standard.json ~/.clawdbot/clawdbot.json
 │  k8s-deploy, docker-ops, aws-ops, terraform, ...        │
 └─────────────────────────────────────────────────────────┘
 ```
-
-## Standalone Version
-
-Looking for the standalone version with its own server? See the [opsbot-standalone](https://github.com/agenticdevops/opsbot/tree/opsbot-standalone) branch.
 
 ## Contributing
 
